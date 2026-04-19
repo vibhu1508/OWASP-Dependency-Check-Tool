@@ -1,0 +1,17 @@
+# OWASP Tooling (Too large for Git)
+dc-v12/
+dc-bin/
+dc-cli.zip
+DependencyCheck/
+
+# Logs and Debugging
+*.log
+report/
+
+# Temp files
+presentation_demo/
+.dctemp*/
+
+# OS-specific
+.DS_Store
+Thumbs.db

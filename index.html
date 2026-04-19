@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DepScan — OWASP Dependency Check Visualizer</title>
+  <meta name="description" content="Interactive dashboard for visualizing OWASP Dependency Check reports. Upload your JSON report to view CVE vulnerabilities, CVSS scores, and fix recommendations." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Chart.js for donut chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════ -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="header-logo">⛨</div>
+      <div>
+        <div class="header-title">DepScan</div>
+        <div class="header-subtitle">OWASP DEPENDENCY CHECK VISUALIZER</div>
+      </div>
+    </div>
+    <div class="header-badge">● OWASP DC Engine v9.0.9</div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       LANDING / UPLOAD SECTION
+       ═══════════════════════════════════════ -->
+  <section id="landing-section">
+
+    <div class="hero-text">
+      <div class="hero-tag">Software Composition Analysis · NVD Powered</div>
+      <h1 class="hero-title">
+        Visualize Your<br/>
+        <span>Dependency Vulnerabilities</span>
+      </h1>
+      <p class="hero-desc">
+        Upload an OWASP Dependency Check JSON report to instantly see CVE findings,
+        CVSS scores, attack vectors, and actionable fix recommendations — all in one
+        beautiful dashboard.
+      </p>
+    </div>
+
+    <!-- Upload Card -->
+    <div id="upload-card" class="upload-card" role="button" aria-label="Upload OWASP DC JSON report">
+      <span class="upload-icon">📂</span>
+      <div class="upload-title">Drop your report here or click to browse</div>
+      <div class="upload-hint">dependency-check-report.json</div>
+      <div class="upload-formats">
+        <span class="format-tag">.json</span>
+        <span class="format-tag">OWASP DC v7+</span>
+        <span class="format-tag">NVD · OSS Index</span>
+      </div>
+      <input type="file" id="file-input" accept=".json,application/json" />
+    </div>
+
+    <!-- Demo Presets -->
+    <div class="demo-section">
+      <div class="demo-label">or try a demo project</div>
+      <div class="demo-cards">
+        <div class="demo-card" onclick="loadDemo('log4shell')" id="demo-log4shell">
+          <span class="demo-card-icon">☠️</span>
+          <div class="demo-card-name">Log4Shell Demo</div>
+          <div class="demo-card-desc">Apache Log4j 2.14.1 · CVE-2021-44228 ·  CVSS 10.0</div>
+          <span class="demo-card-badge badge-critical">CRITICAL</span>
+        </div>
+        <div class="demo-card" onclick="loadDemo('nodeapp')" id="demo-nodeapp">
+          <span class="demo-card-icon">📦</span>
+          <div class="demo-card-name">Node.js App</div>
+          <div class="demo-card-desc">lodash, axios, moment · Prototype Pollution · SSRF</div>
+          <span class="demo-card-badge badge-high">HIGH</span>
+        </div>
+        <div class="demo-card" onclick="loadDemo('pythonapp')" id="demo-pythonapp">
+          <span class="demo-card-icon">🐍</span>
+          <div class="demo-card-name">Python Service</div>
+          <div class="demo-card-desc">requests 2.6.0 · Header Leak · Redirect Bypass</div>
+          <span class="demo-card-badge badge-high">MEDIUM</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div style="max-width:700px;width:100%;text-align:center;border-top:1px solid var(--border);padding-top:2rem;margin-top:1rem">
+      <p style="font-size:0.72rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.04em">
+        Generate a real report with:&nbsp;&nbsp;
+        <span style="color:var(--accent-green)">dependency-check.bat --project "MyApp" --scan ./src --format JSON --out ./report</span>
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SCAN ANIMATION OVERLAY
+       ═══════════════════════════════════════ -->
+  <div id="scan-overlay" role="dialog" aria-label="Scanning in progress">
+
+    <div class="scan-header">
+      <div class="scan-title">⛨ OWASP DEPENDENCY CHECK — SCANNING</div>
+      <div class="scan-project" id="scan-project-label">→ Loading project...</div>
+    </div>
+
+    <div class="scan-progress-bar-wrap">
+      <div class="scan-progress-bar" id="scan-progress"></div>
+    </div>
+
+    <div class="scan-terminal">
+      <div class="terminal-topbar">
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <span class="terminal-title">owasp-dependency-check — bash</span>
+      </div>
+      <div class="terminal-body" id="terminal-body"></div>
+    </div>
+
+    <div class="scan-stats">
+      <div class="scan-stat">
+        <span class="scan-stat-value" id="overlay-total">—</span>
+        <span class="scan-stat-label">Dependencies</span>
+      </div>
+      <div class="scan-stat">
+        <span class="scan-stat-value" id="overlay-vulns">—</span>
+        <span class="scan-stat-label">Vulnerabilities</span>
+      </div>
+      <div class="scan-stat">
+        <span class="scan-stat-value" id="overlay-critical" style="color:var(--critical)">—</span>
+        <span class="scan-stat-label">Critical CVEs</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       DASHBOARD SECTION
+       ═══════════════════════════════════════ -->
+  <main id="dashboard-section">
+
+    <!-- Info Bar -->
+    <div class="dashboard-info-bar">
+      <div class="project-info">
+        <div class="project-name" id="project-name">Loading...</div>
+        <div class="project-meta">
+          <span id="project-date"></span>
+          <span class="project-meta-sep"></span>
+          <span id="project-engine"></span>
+          <span class="project-meta-sep"></span>
+          <span id="project-deps"></span>
+        </div>
+      </div>
+      <div class="dashboard-actions">
+        <button class="btn btn-secondary" onclick="newScan()" id="btn-new-scan">⟵ New Scan</button>
+        <button class="btn btn-primary" onclick="exportReport()" id="btn-export">⬇ Export Report</button>
+      </div>
+    </div>
+
+    <!-- Summary Stats Row -->
+    <div class="stats-row">
+      <div class="stat-card total">
+        <span class="stat-value" id="stat-total">0</span>
+        <span class="stat-label">Total Dependencies</span>
+      </div>
+      <div class="stat-card critical">
+        <span class="stat-value" id="stat-critical">0</span>
+        <span class="stat-label">Critical CVEs</span>
+      </div>
+      <div class="stat-card high">
+        <span class="stat-value" id="stat-high">0</span>
+        <span class="stat-label">High Severity</span>
+      </div>
+      <div class="stat-card medium">
+        <span class="stat-value" id="stat-medium">0</span>
+        <span class="stat-label">Medium Severity</span>
+      </div>
+      <div class="stat-card low">
+        <span class="stat-value" id="stat-low">0</span>
+        <span class="stat-label">Low Severity</span>
+      </div>
+      <div class="stat-card clean">
+        <span class="stat-value" id="stat-clean">0</span>
+        <span class="stat-label">Clean Packages</span>
+      </div>
+    </div>
+
+    <!-- Main Grid: Chart + Table -->
+    <div class="dashboard-grid">
+
+      <!-- Left: Severity Chart Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-title-icon" style="background:rgba(0,255,136,0.1)">📊</div>
+            Severity Breakdown
+          </div>
+        </div>
+        <!-- Chart with centered label overlay -->
+        <div class="chart-wrap" style="position:relative">
+          <canvas id="severity-chart" width="220" height="220"></canvas>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none">
+            <div id="chart-center-value" style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:800;color:var(--text-primary)">0</div>
+            <div id="chart-center-label" style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">CVEs</div>
+          </div>
+        </div>
+        <div class="severity-legend" id="severity-legend"></div>
+      </div>
+
+      <!-- Right: Vulnerability Table Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-title-icon" style="background:rgba(255,62,108,0.1)">⚠</div>
+            Vulnerable Dependencies
+          </div>
+          <div class="filter-bar" id="filter-bar">
+            <button class="filter-btn active" data-filter="ALL"      id="filter-all">All</button>
+            <button class="filter-btn"         data-filter="CRITICAL" id="filter-critical">Critical</button>
+            <button class="filter-btn"         data-filter="HIGH"     id="filter-high">High</button>
+            <button class="filter-btn"         data-filter="MEDIUM"   id="filter-medium">Medium</button>
+            <button class="filter-btn"         data-filter="LOW"      id="filter-low">Low</button>
+          </div>
+        </div>
+        <div class="vuln-table-wrap">
+          <table class="vuln-table" id="vuln-table" aria-label="Vulnerability findings">
+            <thead>
+              <tr>
+                <th>Package</th>
+                <th>Version</th>
+                <th>Severity</th>
+                <th>CVSS</th>
+                <th>CVE / Description</th>
+              </tr>
+            </thead>
+            <tbody id="vuln-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Fix Recommendations Panel -->
+    <div class="panel" id="fix-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-title-icon" style="background:rgba(0,255,136,0.1)">🔧</div>
+          Fix Recommendations
+        </div>
+        <span style="font-size:0.75rem;color:var(--text-muted)">Click a row above to see full CVE details</span>
+      </div>
+      <div class="fix-grid" id="fix-grid"></div>
+    </div>
+
+    <footer class="dashboard-footer">
+      DepScan · Built on OWASP Dependency Check · Data sourced from NVD (NIST) · CVE details via NVD API
+    </footer>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       CVE DETAIL MODAL
+       ═══════════════════════════════════════ -->
+  <div id="modal-overlay" role="dialog" aria-modal="true" aria-label="CVE Details">
+    <div class="modal" id="modal-content"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+{
+  "reportSchema": "1.1",
+  "scanInfo": {
+    "engineVersion": "9.0.9",
+    "dataSource": [
+      { "name": "NVD CVE Checked", "timestamp": "2024-11-01T00:00:00Z" },
+      { "name": "NPM Public Advisories", "timestamp": "2024-10-30T00:00:00Z" }
+    ]
+  },
+  "projectInfo": {
+    "name": "VulnerableWebApp",
+    "reportDate": "2024-11-01T10:23:45.000Z",
+    "credits": {
+      "NVD": "This report contains data from the National Vulnerability Database (NVD), a product of NIST."
+    }
+  },
+  "dependencies": [
+    {
+      "isVirtual": false,
+      "fileName": "lodash-4.17.4.js",
+      "filePath": "/project/node_modules/lodash/lodash.js",
+      "md5": "e1f53c6d16d3e01cd8e3f7c11e48e7a2",
+      "sha1": "22b9b8d45e0e62b41e7940f2088e7236b1d3e0ae",
+      "packages": [
+        {
+          "id": "pkg:npm/lodash@4.17.4",
+          "confidence": "HIGH",
+          "url": "https://ossindex.sonatype.org/component/pkg:npm/lodash@4.17.4"
+        }
+      ],
+      "vulnerabilityIds": [
+        { "id": "cpe:2.3:a:lodash:lodash:4.17.4:*:*:*:*:node.js:*:*", "confidence": "HIGH" }
+      ],
+      "vulnerabilities": [
+        {
+          "name": "CVE-2021-23337",
+          "severity": "HIGH",
+          "cvssv3": {
+            "baseScore": 7.2,
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "privilegesRequired": "HIGH",
+            "userInteraction": "NONE",
+            "scope": "UNCHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "HIGH",
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "cwes": ["CWE-78"],
+          "description": "Lodash versions prior to 4.17.21 are vulnerable to Command Injection via the template function. An attacker can exploit this to execute arbitrary commands on the server.",
+          "notes": "",
+          "references": [
+            { "source": "MISC", "url": "https://snyk.io/vuln/SNYK-JS-LODASH-1040724", "name": "Snyk Advisory" },
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-23337", "name": "NVD Entry" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:lodash:lodash:*:*:*:*:*:node.js:*:*", "versionEndExcluding": "4.17.21" } }
+          ]
+        },
+        {
+          "name": "CVE-2021-23440",
+          "severity": "CRITICAL",
+          "cvssv3": {
+            "baseScore": 9.8,
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "scope": "UNCHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "HIGH",
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "cwes": ["CWE-1321"],
+          "description": "This affects the package set-value before 4.0.1; all versions of package lodash prior to 4.17.17 are vulnerable to Prototype Pollution via the set function. An attacker can modify the prototype of the base object `Object` to add or modify an existing property that will then exist on all objects.",
+          "notes": "",
+          "references": [
+            { "source": "MISC", "url": "https://snyk.io/vuln/SNYK-JS-SETVALUE-1540541", "name": "Snyk Advisory" },
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-23440", "name": "NVD Entry" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:lodash:lodash:*:*:*:*:*:node.js:*:*", "versionEndExcluding": "4.17.21" } }
+          ]
+        }
+      ]
+    },
+    {
+      "isVirtual": false,
+      "fileName": "log4j-core-2.14.1.jar",
+      "filePath": "/project/lib/log4j-core-2.14.1.jar",
+      "md5": "cf65f0d33640f2cd0a0b06dd86a5c6a2",
+      "sha1": "5a0b814b7a2a72b8bb8bc4b82ea0c6a34e048c4e",
+      "packages": [
+        {
+          "id": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1",
+          "confidence": "HIGH",
+          "url": "https://ossindex.sonatype.org/component/pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"
+        }
+      ],
+      "vulnerabilityIds": [
+        { "id": "cpe:2.3:a:apache:log4j:2.14.1:*:*:*:*:*:*:*", "confidence": "HIGH" }
+      ],
+      "vulnerabilities": [
+        {
+          "name": "CVE-2021-44228",
+          "severity": "CRITICAL",
+          "cvssv3": {
+            "baseScore": 10.0,
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "scope": "CHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "HIGH",
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+          },
+          "cwes": ["CWE-917", "CWE-400"],
+          "description": "Log4Shell — Apache Log4j2 2.0-beta9 through 2.15.0 (excluding 2.12.2, 2.12.3, and 2.3.1) JNDI features used in configuration, log messages, and parameters do not protect against attacker-controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or parameters can execute arbitrary code loaded from LDAP servers.",
+          "notes": "This is one of the most critical vulnerabilities ever discovered. CVSS Score: 10.0",
+          "references": [
+            { "source": "MISC", "url": "https://logging.apache.org/log4j/2.x/security.html", "name": "Apache Security Advisory" },
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-44228", "name": "NVD Entry" },
+            { "source": "CISA", "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog", "name": "CISA KEV" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:apache:log4j:*:*:*:*:*:*:*:*", "versionEndExcluding": "2.15.0" } }
+          ]
+        },
+        {
+          "name": "CVE-2021-45046",
+          "severity": "CRITICAL",
+          "cvssv3": {
+            "baseScore": 9.0,
+            "attackVector": "NETWORK",
+            "attackComplexity": "HIGH",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "scope": "CHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "HIGH",
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H"
+          },
+          "cwes": ["CWE-917"],
+          "description": "It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allows attackers with control over Thread Context Map data to craft malicious input data using a JNDI Lookup pattern resulting in an information leak and remote code execution.",
+          "notes": "",
+          "references": [
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-45046", "name": "NVD Entry" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:apache:log4j:*:*:*:*:*:*:*:*", "versionEndExcluding": "2.16.0" } }
+          ]
+        }
+      ]
+    },
+    {
+      "isVirtual": false,
+      "fileName": "axios-0.19.0.js",
+      "filePath": "/project/node_modules/axios/dist/axios.js",
+      "md5": "a9b5dc4c8e0e2b5e5cf75a1b10e3a6e1",
+      "sha1": "3b2c1a4e5f6d7c8b9a0e1f2d3c4b5a6e7f8d9c0b",
+      "packages": [
+        {
+          "id": "pkg:npm/axios@0.19.0",
+          "confidence": "HIGH",
+          "url": "https://ossindex.sonatype.org/component/pkg:npm/axios@0.19.0"
+        }
+      ],
+      "vulnerabilityIds": [
+        { "id": "cpe:2.3:a:axios:axios:0.19.0:*:*:*:*:node.js:*:*", "confidence": "HIGH" }
+      ],
+      "vulnerabilities": [
+        {
+          "name": "CVE-2020-28168",
+          "severity": "MEDIUM",
+          "cvssv3": {
+            "baseScore": 5.9,
+            "attackVector": "NETWORK",
+            "attackComplexity": "HIGH",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "scope": "UNCHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "NONE",
+            "availabilityImpact": "NONE",
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+          },
+          "cwes": ["CWE-918"],
+          "description": "Axios NPM package 0.21.0 contains a Server-Side Request Forgery (SSRF) vulnerability where an attacker may be able to bypass a proxy and access an internal network by causing redirection to an internal server-side URL.",
+          "notes": "",
+          "references": [
+            { "source": "MISC", "url": "https://snyk.io/vuln/SNYK-JS-AXIOS-1038255", "name": "Snyk Advisory" },
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-28168", "name": "NVD Entry" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:axios:axios:*:*:*:*:*:node.js:*:*", "versionEndExcluding": "0.21.1" } }
+          ]
+        }
+      ]
+    },
+    {
+      "isVirtual": false,
+      "fileName": "requests-2.6.0-py2.py3-none-any.whl",
+      "filePath": "/project/venv/lib/python3.9/site-packages/requests-2.6.0.dist-info",
+      "md5": "b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9",
+      "sha1": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b",
+      "packages": [
+        {
+          "id": "pkg:pypi/requests@2.6.0",
+          "confidence": "HIGH",
+          "url": "https://ossindex.sonatype.org/component/pkg:pypi/requests@2.6.0"
+        }
+      ],
+      "vulnerabilityIds": [
+        { "id": "cpe:2.3:a:python-requests:requests:2.6.0:*:*:*:*:python:*:*", "confidence": "HIGH" }
+      ],
+      "vulnerabilities": [
+        {
+          "name": "CVE-2023-32681",
+          "severity": "MEDIUM",
+          "cvssv3": {
+            "baseScore": 6.1,
+            "attackVector": "NETWORK",
+            "attackComplexity": "HIGH",
+            "privilegesRequired": "NONE",
+            "userInteraction": "REQUIRED",
+            "scope": "CHANGED",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "NONE",
+            "availabilityImpact": "NONE",
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N"
+          },
+          "cwes": ["CWE-601"],
+          "description": "Requests is a HTTP library for Python. Since Requests 2.3.0, Requests has been leaking `Proxy-Authorization` headers to destination servers when redirected to an HTTPS endpoint. This is a product of how Requests handles redirects and HTTP headers when following a redirection from HTTP to HTTPS.",
+          "notes": "",
+          "references": [
+            { "source": "MISC", "url": "https://github.com/psf/requests/security/advisories/GHSA-j8r2-6x86-q33q", "name": "GitHub Advisory" },
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2023-32681", "name": "NVD Entry" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:python-requests:requests:*:*:*:*:*:python:*:*", "versionEndExcluding": "2.31.0" } }
+          ]
+        }
+      ]
+    },
+    {
+      "isVirtual": false,
+      "fileName": "express-4.16.0.js",
+      "filePath": "/project/node_modules/express/index.js",
+      "md5": "c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+      "sha1": "a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9",
+      "packages": [
+        {
+          "id": "pkg:npm/express@4.16.0",
+          "confidence": "HIGH",
+          "url": "https://ossindex.sonatype.org/component/pkg:npm/express@4.16.0"
+        }
+      ],
+      "vulnerabilityIds": [
+        { "id": "cpe:2.3:a:expressjs:express:4.16.0:*:*:*:*:node.js:*:*", "confidence": "HIGH" }
+      ],
+      "vulnerabilities": []
+    },
+    {
+      "isVirtual": false,
+      "fileName": "react-16.8.0.js",
+      "filePath": "/project/node_modules/react/index.js",
+      "packages": [{ "id": "pkg:npm/react@16.8.0", "confidence": "HIGH" }],
+      "vulnerabilityIds": [],
+      "vulnerabilities": []
+    },
+    {
+      "isVirtual": false,
+      "fileName": "moment-2.24.0.js",
+      "filePath": "/project/node_modules/moment/moment.js",
+      "packages": [{ "id": "pkg:npm/moment@2.24.0", "confidence": "HIGH" }],
+      "vulnerabilityIds": [
+        { "id": "cpe:2.3:a:momentjs:moment:2.24.0:*:*:*:*:node.js:*:*", "confidence": "HIGH" }
+      ],
+      "vulnerabilities": [
+        {
+          "name": "CVE-2022-24785",
+          "severity": "HIGH",
+          "cvssv3": {
+            "baseScore": 7.5,
+            "attackVector": "NETWORK",
+            "attackComplexity": "LOW",
+            "privilegesRequired": "NONE",
+            "userInteraction": "NONE",
+            "scope": "UNCHANGED",
+            "confidentialityImpact": "NONE",
+            "integrityImpact": "HIGH",
+            "availabilityImpact": "NONE",
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "cwes": ["CWE-22"],
+          "description": "Moment.js is a JavaScript date library for parsing, validating, manipulating, and formatting dates. A path traversal vulnerability impacts npm (server) users of Moment.js between versions 1.0.1 and 2.29.1, especially if a user-provided locale string is directly used to switch moment locale.",
+          "notes": "",
+          "references": [
+            { "source": "MISC", "url": "https://github.com/moment/moment/security/advisories/GHSA-8hfj-j24r-96c4", "name": "GitHub Advisory" },
+            { "source": "NVD", "url": "https://nvd.nist.gov/vuln/detail/CVE-2022-24785", "name": "NVD Entry" }
+          ],
+          "vulnerableSoftware": [
+            { "software": { "id": "cpe:2.3:a:momentjs:moment:*:*:*:*:*:node.js:*:*", "versionEndExcluding": "2.29.2" } }
+          ]
+        }
+      ]
+    },
+    {
+      "isVirtual": false,
+      "fileName": "webpack-4.46.0.js",
+      "filePath": "/project/node_modules/webpack/lib/webpack.js",
+      "packages": [{ "id": "pkg:npm/webpack@4.46.0", "confidence": "HIGH" }],
+      "vulnerabilityIds": [],
+      "vulnerabilities": []
+    }
+  ]
+}
